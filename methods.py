@@ -22,10 +22,11 @@ def methodGaussJordan(system_unsolved):
         pivot = system[n][n]
         if(pivot == 0):
             system = permutateLine(n, system, system_dimension)
-
-        if(system == []):
-            return system
         
+        if(len(system) == 0):
+            return []
+        
+
         print("Using Pivot a{0}{0} = {1:.2f}".format(n+1, system[n][n]))
         print()
         print("1.{} Subtracting line by line_pivot/pivot * pivot_line".format(n+1))
@@ -110,4 +111,24 @@ def methodGaussJacobi(system_unsolved, wanted_error):
             print("Maximum Error = {:.2f}, bigger then wanted error = {:.2f}, continuing".format(error, wanted_error))
             g = X
             count += 1
+
+
+def methodNewton(system_unsolved, wanted_error, inital_guess):
+    system = system_unsolved
+    jacobian = []
+    for i in range(len(system)):
+        line = []
+        for j in range(len(system)):
+            polynomial = np.poly1d(system[i][j])
+            derrivative = polynomial.deriv()
+            line.append(derrivative)
+        jacobian.append(line)
+    
+    print("Evaluating initial guess at the jacobian:")
+    new_sys = system
+    for i in range(len(system)):
+        for j in range(len(system)):
+            new_sys[i][j] = jacobian[i][j](inital_guess[j])
+
+    print(new_sys)
 
