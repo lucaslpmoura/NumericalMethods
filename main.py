@@ -2,55 +2,82 @@ from util import *
 from methods import methodGaussJordan, methodGaussJacobi, methodNewton
 import numpy as np
 
-test_system = ([3.0, 2.0, 4.0, 1.0],
-               [1.0, 1.0, 2.0, 2.0],
-               [4.0, 3.0, -2.0, 3.0])
-
-test_system1 = ([10.0, 2.0, 1.0, 7.0],
-                [1.0, 5.0, 1.0, -8.0],
-                [2.0, 3.0, 10.0, 6.0])
-
-test_system2 = ([[1,0],[1,0],[3]],
-                [[1,0,0],[1,0,0], [9]])
-#taking the system to be solved from the user
-#system = takeSystem()
-system = test_system
-
-
-print("Solving for system: ")
-printSystem(system)
-solution = methodGaussJordan(system)
-if(solution == []):
-    print("System could not be solved!")
-    exit()
+def printMenu():
+    print("------------------------------------")
+    print("Select an method to use or press 'q' to quit: ")
+    print("1) Gauss-Jordan")
+    print("2) Gauss-Jacobi")
+    print("3) Newton")
+    print("------------------------------------")
 
 
 
-sol_string = "Solution found through Gauss-Jordan method: b = ["
-for i in range (len(solution)):
-    add_str = "{:.2f}".format(solution[i])
-    sol_string += add_str
-    if(i < len(solution)):
-        sol_string += ", "
-print(sol_string+"]")
+test_system_newton=([[-1,0,4,0], [1,0], [0]],
+              [[-1/9,0,0], [-1/4,1,0], [-1]])
+
+test_system_direct=([2.0,2.0,1.0,1.0,7.0],
+              [1.0,-1.0,2.0,-1.0,1.0],
+              [3.0,2.0,-3.0,-2.0,4.0],
+              [4.0,3.0,2.0,1.0,12.0])
+
+test_system_iterative=([5.0,2.0,-1.0,4.0,12.0],
+                    [2.0,6.0,2.0,-1.0,10.0],
+                    [1.0,2.0,7.0,3.0,17.0],
+                    [3.0,-1.0,2.0,8.0,11.0])
+
+clearScreen()
+while(True):
+    printMenu()
+    op = input()
+    match(op):
+        case "q":
+            exit()
+        case "Q":
+            exit()
+        case "1":
+            clearScreen()
+            print("Resolving system through Gauss-Jordan method: ")
+            printSystem(test_system_direct)
+            solution = methodGaussJordan(test_system_direct)
+            if(len(solution) == 0):
+                print("No solution could be found for the system!")
+            else:
+                print("Solution = " + solutionToString(solution))
+            print()
+            cnt = input("Press any key to return to the menu.")
+            clearScreen()
 
 
-system = test_system1
-print("Solving for system:")
-printSystem(system)
-solution = methodGaussJacobi(system, 0.05)
-if(solution == []):
-    print("System could not be solved!")
-    exit()
+        case "2":
+            clearScreen()
+            print("Resolving system through Newton's method, using error = 0.01: ")
+            printSystem(test_system_iterative)
+            solution = methodGaussJacobi(test_system_iterative, 0.01)
+            if(len(solution) == 0):
+                print("No solution could be found for the system!")
+            else:
+                print("Solution = " + solutionToString(solution))
+            print()
+            cnt = input("Press any key to return to the menu.")
+            clearScreen()
 
-sol_string = "Solution found through Gauss-Jacobi method: b = ["
-for i in range (len(solution)):
-    add_str = "{:.2f}".format(solution[i])
-    sol_string += add_str
-    if(i < len(solution)):
-        sol_string += ", "
-print(sol_string+"]")
 
-system = test_system2
-methodNewton(system, 0.05, [1,5])
+        case "3":
+            clearScreen()
+            print("Resolving system through Gauss-Jacobi method, using error = 0.01, and initial guess [-1,-2]: ")
+            print()
+            print("See source code for system coeficients.")
+            print()
+            solution = methodNewton(test_system_newton, 0.01, [-1,-2])
+            if(len(solution) == 0):
+                print("No solution could be found for the system!")
+                
+            else:
+                print("Solution = " + solutionToString(solution))
+            print()
+            cnt = input("Press any key to return to the menu.")
+            clearScreen()
 
+
+        case _:
+            print("Please enter an valid option.")

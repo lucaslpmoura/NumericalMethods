@@ -1,4 +1,6 @@
+import os
 
+#Prints a linear system in a tidy way
 def printSystem(system):
     system_dimension = len(system)
     print()
@@ -21,6 +23,8 @@ def printSystem(system):
         print(line_to_print)
     print()
 
+
+#Takes an n-dimensional system as inputed by the user
 def takeSystem():
     system_dimension = int(input("Please enter the system dimension (max 6): "))
     system = []
@@ -34,3 +38,19 @@ def takeSystem():
     
     system = tuple(system)
     return system
+
+#clears the terminal
+def clearScreen():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+
+
+#converts the values of an float array to an neat string
+def solutionToString(solution):
+    sol = "["
+    for i in range(len(solution)):
+        sol += "{:.5f}".format(solution[i])
+        if(i != len(solution)-1):
+            sol += ", "
+    sol += "]"
+    return sol 
