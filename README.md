@@ -1,5 +1,5 @@
 # NumericalMethods
-Simple exemples of selected numerical computaing methods, in this case used for solving systems of equations.
+Simple exemples of selected numerical computaing methods.
 ## Methods
 ### Solving Linear Systems
 - Gauss-Jordan
