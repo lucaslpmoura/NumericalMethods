@@ -7,6 +7,8 @@ Simple exemples of selected numerical computaing methods.
 - Newton
 ### Finding Real Roots
 - Bissection
+### Interpolating data
+- LaGrange
 
 ## Dependencies
 - [numpy](https://numpy.org)
@@ -20,4 +22,8 @@ python3 main.py
 ### Finding Real Roots
 ```console
 python3 real_roots.py
+```
+### Interpolating data
+```console
+python3 interpolation.py
 ```
